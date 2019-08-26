@@ -1,0 +1,1 @@
+This file has some text ad must be copied into file2 this

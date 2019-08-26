@@ -39,10 +39,11 @@ def generate_random_numbers():
     
     
     column = [s[i][random_y] for i in range(1,10)]
+
     num = '.'+str(random_number)
     cell = []
-    if random_x <= 3 :
 
+    if random_x <= 3 :
         if random_y <= 2:
 
             cell.append(s[1][0])
@@ -157,9 +158,8 @@ def generate_random_numbers():
     
     if '.'+str(random_number) not in s[random_x] and '.'+str(random_number) not in column and '.'+str(random_number) not in cell:
         s[random_x][random_y] = '.'+str(random_number)
+        print(random_number)
 
-    
-        
     elif '.'+str(random_number) in s[random_x] and '.'+str(random_number) in column and '.'+str(random_number) in cell:
         
         generate_random_numbers()
@@ -167,7 +167,7 @@ def generate_random_numbers():
 
 print_sudoku_board()
 
-while ct <= 81:
+while ct <= 90:
     generate_random_numbers()
     ct += 1
 
