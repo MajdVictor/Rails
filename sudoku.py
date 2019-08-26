@@ -150,8 +150,6 @@ def generate_random_numbers():
             cell.append(s[9][8])
 
 
-    
-    
     if '.'+str(random_number) not in s[random_x] and '.'+str(random_number) not in column and '.'+str(random_number) not in cell:
         s[random_x][random_y] = '.'+str(random_number)
         ct += 1
