@@ -3,6 +3,7 @@ import random
 
 s = {}
 ct = 0
+l = []
 def print_sudoku_board():
     
     global s
@@ -19,7 +20,7 @@ def print_sudoku_board():
         print('| '+s[i][0],s[i][1],s[i][2],'|',s[i][3],s[i][4],s[i][5],'|',s[i][6],s[i][7],s[i][8],'|')
         if counter % 3 == 0:
             print('-'*34)
-    '           '
+    
     return s
     
     
@@ -31,10 +32,14 @@ def generate_random_numbers():
     global ct
     
     random_number = random.randint(1,9)
+    
     random_x = random.randint(1,9)
     random_y = random.randint(0,8)
     
+    
+    
     column = [s[i][random_y] for i in range(1,10)]
+    num = '.'+str(random_number)
     cell = []
     if random_x <= 3 :
 
@@ -149,24 +154,22 @@ def generate_random_numbers():
             cell.append(s[9][7])
             cell.append(s[9][8])
 
-
+    
     if '.'+str(random_number) not in s[random_x] and '.'+str(random_number) not in column and '.'+str(random_number) not in cell:
         s[random_x][random_y] = '.'+str(random_number)
-        ct += 1
-        
-    else:
-        generate_random_numbers()
-    
 
     
-    
-    
+        
+    elif '.'+str(random_number) in s[random_x] and '.'+str(random_number) in column and '.'+str(random_number) in cell:
+        
+        generate_random_numbers()
+        
 
 print_sudoku_board()
 
-
-while ct != 91:
+while ct <= 81:
     generate_random_numbers()
+    ct += 1
 
 
 print_sudoku_board()
