@@ -158,9 +158,10 @@ def generate_random_numbers():
     
     if '.'+str(random_number) not in s[random_x] and '.'+str(random_number) not in column and '.'+str(random_number) not in cell:
         s[random_x][random_y] = '.'+str(random_number)
-        print(random_number)
+       
 
-    elif '.'+str(random_number) in s[random_x] and '.'+str(random_number) in column and '.'+str(random_number) in cell:
+    else:
+        #elif '.'+str(random_number) in s[random_x] and '.'+str(random_number) in column and '.'+str(random_number) in cell:
         
         generate_random_numbers()
         
@@ -168,7 +169,9 @@ def generate_random_numbers():
 print_sudoku_board()
 
 while ct <= 90:
+
     generate_random_numbers()
+
     ct += 1
 
 
