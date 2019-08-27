@@ -43,7 +43,24 @@ class Circle(Shape):
 
 class Text:
 
+    def __init__(self):
+
+    
+    def text(self):
+
+    
+    def font_name(self):
+
+    
+
 class SavedText:
+
+    def __init__(self):
+
+    def text(self):
+
+    def number(self):
+        
 
 
 if __name__ == "__main__":

@@ -1,16 +1,24 @@
 import random
+import sys
+
 #Drawing sudoko board
 
 s = {}
 ct = 0
 l = []
+coordinates = [(x,y) for x in range(1,10) for y in range(0,9)]
+counter_x = 1
+counter_y = 0
+random_numbers_list = [1,2,3,4,5,6,7,8,9]
 def print_sudoku_board():
     
     global s
+    
 
     if not s:
         
         s = {i+1:['  ' for i in range(1,10)] for i in range(9)}
+
 
     counter = 0
     print(('-' * 34))
@@ -30,149 +38,116 @@ def generate_random_numbers():
     
     global s
     global ct
-    
-    random_number = random.randint(1,9)
-    
-    random_x = random.randint(1,9)
-    random_y = random.randint(0,8)
-    
-    
-    
-    column = [s[i][random_y] for i in range(1,10)]
+    global random_list
+    global counter_x
+    global counter_y
+    global random_numbers_list
 
-    num = '.'+str(random_number)
+    
+    
+    
+    
     cell = []
-
-    if random_x <= 3 :
-        if random_y <= 2:
-
-            cell.append(s[1][0])
-            cell.append(s[1][1])
-            cell.append(s[1][2])
-            cell.append(s[2][0])
-            cell.append(s[2][1])
-            cell.append(s[2][2])
-            cell.append(s[3][0])
-            cell.append(s[3][1])
-            cell.append(s[3][2])
-
-        elif random_y >= 3 and random_y <= 5:
-            cell.append(s[1][3])
-            cell.append(s[1][4])
-            cell.append(s[1][5])
-            cell.append(s[2][3])
-            cell.append(s[2][4])
-            cell.append(s[2][5])
-            cell.append(s[3][3])
-            cell.append(s[3][4])
-            cell.append(s[3][5])
-
-            
-
-        elif random_y > 5:
-            cell.append(s[1][6])
-            cell.append(s[1][7])
-            cell.append(s[1][8])
-            cell.append(s[2][6])
-            cell.append(s[2][7])
-            cell.append(s[2][8])
-            cell.append(s[3][6])
-            cell.append(s[3][7])
-            cell.append(s[3][8])
     
-    elif random_x >= 4 and random_x <= 6:
-        if random_y <= 2:
-            cell.append(s[4][0])
-            cell.append(s[4][1])
-            cell.append(s[4][2])
-            cell.append(s[5][0])
-            cell.append(s[5][1])
-            cell.append(s[5][2])
-            cell.append(s[6][0])
-            cell.append(s[6][1])
-            cell.append(s[6][2])
-            
 
-        elif random_y >= 3 and random_y <= 5:
-            cell.append(s[4][3])
-            cell.append(s[4][4])
-            cell.append(s[4][5])
-            cell.append(s[5][3])
-            cell.append(s[5][4])
-            cell.append(s[5][5])
-            cell.append(s[6][3])
-            cell.append(s[6][4])
-            cell.append(s[6][5])
-            
-
-        elif random_y > 5:
-            
-            cell.append(s[4][6])
-            cell.append(s[4][7])
-            cell.append(s[4][8])
-            cell.append(s[5][6])
-            cell.append(s[5][7])
-            cell.append(s[5][8])
-            cell.append(s[6][6])
-            cell.append(s[6][7])
-            cell.append(s[6][8])
-    
-    elif random_x >= 7:
-
-        if random_y <= 2:
-            
-            cell.append(s[7][0])
-            cell.append(s[7][1])
-            cell.append(s[7][2])
-            cell.append(s[8][0])
-            cell.append(s[8][1])
-            cell.append(s[8][2])
-            cell.append(s[9][0])
-            cell.append(s[9][1])
-            cell.append(s[9][2])
-
-        elif random_y >= 3 and random_y <= 5:
-            
-            cell.append(s[7][3])
-            cell.append(s[7][4])
-            cell.append(s[7][5])
-            cell.append(s[8][3])
-            cell.append(s[8][4])
-            cell.append(s[8][5])
-            cell.append(s[9][3])
-            cell.append(s[9][4])
-            cell.append(s[9][5])
-
-        elif random_y > 5:
-            
-            cell.append(s[7][6])
-            cell.append(s[7][7])
-            cell.append(s[7][8])
-            cell.append(s[8][6])
-            cell.append(s[8][7])
-            cell.append(s[8][8])
-            cell.append(s[9][6])
-            cell.append(s[9][7])
-            cell.append(s[9][8])
-
-    
-    if '.'+str(random_number) not in s[random_x] and '.'+str(random_number) not in column and '.'+str(random_number) not in cell:
-        s[random_x][random_y] = '.'+str(random_number)
-       
-
-    else:
-        #elif '.'+str(random_number) in s[random_x] and '.'+str(random_number) in column and '.'+str(random_number) in cell:
+    while counter_y != 9:
         
-        generate_random_numbers()
         
+        random_number = random.choice(random_numbers_list)
+        num = '.'+str(random_number)
+
+        column = [s[i][counter_y] for i in range(1,10)]
+        if counter_x <= 3 :
+            if counter_y <= 2:
+                cell = []
+                for i in range (1,4):
+                    for x in range(3):
+                        cell.append(s[i][x])
+
+            elif counter_y >= 3 and counter_y <= 5:
+                cell = []
+                for i in range (1,4):
+                    for x in range(3,6):
+                        cell.append(s[i][x])
+
+                
+
+            elif counter_y > 5:
+                cell = []
+                for i in range (1,4):
+                    for x in range(6,9):
+                        cell.append(s[i][x])
+        
+        elif counter_x >= 4 and counter_x <= 6:
+            if counter_y <= 2:
+                cell = []
+                for i in range (4,7):
+                    for x in range(3):
+                        cell.append(s[i][x])
+                
+
+            elif counter_y >= 3 and counter_y <= 5:
+                cell = []
+                for i in range (4,7):
+                    for x in range(3,6):
+                        cell.append(s[i][x])
+                
+
+            elif counter_y > 5:
+                cell = []
+                for i in range (4,7):
+                    for x in range(6,9):
+                        cell.append(s[i][x])
+        
+        elif counter_x >= 7:
+
+            if counter_y <= 2:
+                cell = []
+                for i in range (7,10):
+                    for x in range(3):
+                        cell.append(s[i][x])
+
+            elif counter_y >= 3 and counter_y <= 5:
+                cell = []
+                for i in range (7,10):
+                    for x in range(3,6):
+                        cell.append(s[i][x])
+
+            elif counter_y > 5:
+                cell = []
+                for i in range (7,10):
+                    for x in range(6,9):
+                        cell.append(s[i][x])
+            
+
+    
+        if num not in s[counter_x] and num not in column and num not in cell :
+            s[counter_x][counter_y] = num
+            
+            counter_y += 1
+            random_numbers_list.remove(random_number)
+        else:
+            print_sudoku_board()
+            generate_random_numbers()
+            
+
+        
+        
+    
+
+
+#while '  ' in s[1] or '  ' in s[2] or '  ' in s[3] or '  ' in s[4] or '  ' in s[5] or '  ' in s[6] or '  ' in s[7] or '  ' in s[8] or '  ' in s[9]:
+    ##create_filled_board()
+
 
 print_sudoku_board()
-
-while ct <= 90:
-
+for i in range(3):
+    
     generate_random_numbers()
-
-    ct += 1
-
-
+    counter_y = 0
+    counter_x += 1
+    random_numbers_list = [1,2,3,4,5,6,7,8,9]
+    print_sudoku_board()
+    
+#print_sudoku_board()
 print_sudoku_board()
