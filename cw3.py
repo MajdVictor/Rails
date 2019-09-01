@@ -51,26 +51,8 @@ def fibonacci_recursion():
     for i in range(7):
         print (fibonacci(i))
 
-###Q4 Not finished yet
 
 
-
-def calculate_coins(coins , l , N):
-    global counter
-
-    if N == 0:
-        return True
-    if N < 0 :
-        return False
-    
-    return calculate_coins(coins, len(coins)-1, N) + calculate_coins(coins, len(coins), N-coins[len(coins)])
-    
-
-    
-    
-
-
-####q5 not finished yet
 
 if __name__ == "__main__":
     calculate_coins([1,2,3,4],4,4)
