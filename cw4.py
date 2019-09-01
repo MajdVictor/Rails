@@ -1,9 +1,6 @@
 import math
 class Shape:
 
-    def __init__(self):
-        pass
-
     def area(self):
         pass
 
@@ -15,7 +12,7 @@ class Square(Shape):
 
     def __init__(self, length = 0):
         self.length = length
-        Shape.__init__(self)
+        
     
     def area(self):
         return self.length ** 2
@@ -23,13 +20,14 @@ class Square(Shape):
     def perimeter(self):
         return self.length * 4
 
-    def __str__(self):
+    def message(self):
         print ('This is a Square class')
+
 class Circle(Shape):
 
     def __init__(self,radius = 0):
         self.radius = radius
-        Shape.__init__(self)
+        
 
     def area(self):
         return math.pi*(self.radius**2)
@@ -37,39 +35,39 @@ class Circle(Shape):
     def perimeter(self):
         return 2*math.pi*self.radius
     
-    def __str__(self):
+    def message(self):
         print ('This is a Circle class')
 
 
-class Text:
+# class Text:
 
-    def __init__(self):
-
-    
-    def text(self):
+#     def __init__(self):
 
     
-    def font_name(self):
+#     def text(self):
+
+    
+#     def font_name(self):
 
     
 
-class SavedText:
+# class SavedText:
 
-    def __init__(self):
+#     def __init__(self):
 
-    def text(self):
+#     def text(self):
 
-    def number(self):
+#     def number(self):
         
 
 
 if __name__ == "__main__":
     new_square = Square(5)
-    new_square.__str__()
+    new_square.message()
     print('perimeter:',new_square.perimeter())
     print('area:',new_square.area())
 
     new_circle = Circle(8)
-    new_circle.__str__()
+    new_circle.message()
     print('perimeter:',new_circle.perimeter())
     print('area:',new_circle.area())

@@ -70,9 +70,38 @@ def parse_url(url):
 
     return new_dict
 
-##Q4 not finished yet
+def parsing(filename1, filename2):
+    line1 = ''
+    line2 = ''
+    new_line = ''
+
+    d = open(filename2,'w')
+
+    with open(filename1, 'r') as f:
+
+        lines = f.readlines()
+        for i in range(len(lines)-1):
+        
+            if 'Day' in lines[i]:
+                d.write(lines[i])
+            elif not lines[i].strip():
+                d.write('\n')
+            else:
+                if lines[i+1].strip():
+                    
+                    next_line = lines[i+1]
+                    d.write(lines[i][0:5] +'-'+next_line[:5]+lines[i][5:])
+                
+    f.close()
+
+
+
+            
+
+
+
 
 if __name__ == "__main__":
-    pass
+    parsing('cw2_data.txt','cw2_data_parsed.txt')
 
 
