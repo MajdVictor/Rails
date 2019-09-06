@@ -54,6 +54,3 @@ def fibonacci_recursion():
 
 
 
-if __name__ == "__main__":
-    calculate_coins([1,2,3,4],4,4)
-

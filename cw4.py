@@ -39,27 +39,6 @@ class Circle(Shape):
         print ('This is a Circle class')
 
 
-# class Text:
-
-#     def __init__(self):
-
-    
-#     def text(self):
-
-    
-#     def font_name(self):
-
-    
-
-# class SavedText:
-
-#     def __init__(self):
-
-#     def text(self):
-
-#     def number(self):
-        
-
 
 if __name__ == "__main__":
     new_square = Square(5)

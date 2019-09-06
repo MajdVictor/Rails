@@ -5,12 +5,13 @@ class Party:
         if friends is None:
             self.friends=[]
         else : 
-            self.friends= friends
-            
+            self.friends = friends
+
         if day is None:
             self.day=""
         else : 
             self.day= day
+
         if time is None:
             self.time=""
         else : 
@@ -25,6 +26,7 @@ class Party:
         self.friends.remove(friend.name)
 
     def send_invititation(self, day, time):
+        
         self.day = day 
         self.time = time
         

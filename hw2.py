@@ -97,5 +97,3 @@ chat.show_human_dialogue()
 print('\n')
 print('Robot Dialogue:\n---------')
 chat.show_robot_dialogue()
-#chat.show_robot_dialogue(bot)
-
