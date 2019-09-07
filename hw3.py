@@ -40,25 +40,25 @@ def user_interaction(conn):
     artist_name = input('ArtistName: ')
     
     #------------------------------------------------
-
-    cursor = conn.cursor()
-
     cursor.execute(f'''INSERT INTO genres(Name) VALUES(?)''',(genre_name,))
     cursor.execute(f'''INSERT INTO media_types (Name) VALUES (?)''',(media_type,))
     cursor.execute(f'''INSERT INTO artists (Name) VALUES (?)''',(artist_name,))
     conn.commit()
-    
-    
     album_name = input('AlbumName: ')
     artist_id = list(cursor.execute("SELECT ArtistId FROM artists WHERE Name=?", (artist_name,)))
-    print(artist_id[0][0])
-    cursor.execute(f'''INSERT INTO "albums" (Title, ArtistId) VALUES (?,?)''',(artist_name,artist_id,))
+    
+    cursor.execute(f'''INSERT INTO "albums" (Title, ArtistId) VALUES (?,?)''',(album_name,artist_id[0][0],))
     #------------------------------------------------
-    genre_id = cursor.execute("SELECT GenreId FROM genres WHERE Name=?", (genre_name,))
-    media_id = cursor.execute("SELECT MediaTypeId FROM media_types WHERE Name=?", (media_type,))
+    genre_id = list(cursor.execute("SELECT GenreId FROM genres WHERE Name=?", (genre_name,)))
+    media_id = list(cursor.execute("SELECT MediaTypeId FROM media_types WHERE Name=?", (media_type,)))
     artist_id = cursor.execute("SELECT ArtistId FROM artists WHERE Name=?", (artist_name,))
-    album_id = cursor.execute("SELECT AlbumId FROM albums WHERE ArtistId=?", (artist_id,))
+    ar_id = list(artist_id)[0][0]
+    
+    album_id = list(cursor.execute("SELECT AlbumId FROM albums WHERE ArtistId=?", (ar_id,)))
     #------------------------------------------------
+    
+    
+    
     track_name = input('TrackName: ')
     composer = input('Composer: ')
     milliseconds = int(input('Milliseconds: '))
@@ -77,7 +77,7 @@ def user_interaction(conn):
     cursor.execute(f"""INSERT INTO 'tracks'
                           ('Name', 'AlbumId', 'MediaTypeId', 'GenreId', 'Composer', 'Milliseconds', 'Bytes', 'UnitPrice') 
                            VALUES 
-                          ('{track_name}','{album_id}','{media_id}','{genre_id}','{composer}','{milliseconds}','{track_bytes}','{unit_price}')""")
+                          ('{track_name}','{album_id[0][0]}','{media_id[0][0]}','{genre_id[0][0]}','{composer}','{milliseconds}','{track_bytes}','{unit_price}')""")
     
     conn.commit()
     

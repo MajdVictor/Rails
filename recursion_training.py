@@ -68,5 +68,12 @@ def marking_tests(tests):
     tests.pop()
     return 1 + marking_tests(tests)
 
-s = marking_tests([1,2,3,4,5,6,7])
-print(s)
+
+def coins_change(coins, n)
+
+    if n <= 0:
+        return 0
+
+    if 
+    else:
+        return n + coins_change(coins)
