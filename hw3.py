@@ -1,5 +1,22 @@
 import sqlite3
 
+def create_connection(db_file):
+    """ create a database connection to the SQLite database
+        specified by the db_file
+    :param db_file: database file
+    :return: Connection object or None
+    """
+    conn = None
+    try:
+        conn = sqlite3.connect(db_file,timeout=1)
+        conn.isolation_level = None
+    except:
+        print('try again')
+    
+
+    return conn
+
+
 def print_menu():
 
     print('''
@@ -16,13 +33,66 @@ def print_menu():
         c- All the revenues from a specific music genre.
     ''')
 
-def user_interaction(conn):
-    # print_menu()
 
-    # user_input = str(input('Pick one of the choices : '))
+def get_playlist(conn):
 
-    # #if user_input == '1':
-    #     #print('Provide all these information')
+    cursor = conn.cursor()
+    playlists = list(cursor.execute("SELECT * FROM playlists"))
+    for i in playlists:
+        print(i[0], '- ', i[1])
+
+    conn.commit()
+    #conn.close()
+    cursor.close()
+
+    del cursor
+    del conn
+
+def create_playlist(conn):
+
+    cursor = conn.cursor()
+    new_playlist = input('Enter the name of the new playlist: ')
+    cursor.execute(f'''INSERT INTO playlists(Name) VALUES(?)''',(new_playlist,))
+
+    conn.commit()
+    conn.close()
+    del cursor
+    del conn
+
+def get_tracks(conn):
+    cursor = conn.cursor()
+    songs = list(cursor.execute("SELECT TrackId,Name FROM tracks LIMIT 10"))
+    for i in songs:
+        print(i[0], '- ', i[1])
+
+    conn.commit()
+    
+    del cursor
+    del conn
+
+def add_song_to_playlist(conn):
+
+    cursor = conn.cursor()
+    print('Playlists:------------------------')
+    #get_playlist(conn)
+    print('Songs:--------------------------')
+    #get_tracks(conn)
+
+    playlist = int(input('Enter the number of the playlist: '))
+    track = int(input('Enter the number of the song you wish to add to the playlist: '))
+    
+    cursor.execute('''INSERT INTO playlist_track(PlaylistId,TrackId) VALUES(?,?)''',(playlist,track))
+
+    conn.commit()
+    conn.close()
+    del conn
+    del cursor
+    
+
+
+
+def add_track(conn):
+    
     values = []
     cursor = conn.cursor()
     
@@ -57,22 +127,12 @@ def user_interaction(conn):
     album_id = list(cursor.execute("SELECT AlbumId FROM albums WHERE ArtistId=?", (ar_id,)))
     #------------------------------------------------
     
-    
-    
     track_name = input('TrackName: ')
     composer = input('Composer: ')
     milliseconds = int(input('Milliseconds: '))
     track_bytes = int(input('Bytes: '))
     unit_price = float(input('UnitPrice: '))
 
-
-
-    #------------------------------------------------
-    # print('Enter the following information \n----------------------------')
-    # for name in field_names[1:]:
-    #     i = input(name+':')
-    #     values.append(i)
-        
     
     cursor.execute(f"""INSERT INTO 'tracks'
                           ('Name', 'AlbumId', 'MediaTypeId', 'GenreId', 'Composer', 'Milliseconds', 'Bytes', 'UnitPrice') 
@@ -80,41 +140,15 @@ def user_interaction(conn):
                           ('{track_name}','{album_id[0][0]}','{media_id[0][0]}','{genre_id[0][0]}','{composer}','{milliseconds}','{track_bytes}','{unit_price}')""")
     
     conn.commit()
-    
     conn.close()
     del cursor
-    
     del conn
-    
 
-    
 
-def create_connection(db_file):
-    """ create a database connection to the SQLite database
-        specified by the db_file
-    :param db_file: database file
-    :return: Connection object or None
-    """
-    conn = None
-    try:
-        conn = sqlite3.connect(db_file,timeout=1, isolation_level=None)
-    except:
-        print('try again')
-    
 
-    return conn
-
-def retrieve_info(conn):
-
- 
-    
-    cursor = conn.cursor()
-    cursor.execute( 'select * from employees')
-    rows = cursor.fetchall()
-
-    for i in rows:
-        print(i)
 
 conn = create_connection('chinook.db')
-user_interaction(conn)
+add_song_to_playlist(conn)
+#get_playlist(conn)
+#add_track(conn)
 #retrieve_info(conn)
