@@ -8,14 +8,20 @@ def create_connection(db_file):
     """
     conn = None
     try:
-        conn = sqlite3.connect(db_file,timeout=1)
-        conn.isolation_level = None
+        conn = sqlite3.connect(db_file, isolation_level=None,timeout=1)
+        #conn.isolation_level = None
     except:
         print('try again')
     
 
     return conn
 
+def kill_conn(conn, cursor):
+        conn.commit()
+        conn.close()
+        cursor.close()
+        del cursor
+        del conn
 
 def print_menu():
 
@@ -44,7 +50,6 @@ def get_playlist(conn):
     conn.commit()
     #conn.close()
     cursor.close()
-
     del cursor
     del conn
 
@@ -54,6 +59,7 @@ def create_playlist(conn):
     new_playlist = input('Enter the name of the new playlist: ')
     cursor.execute(f'''INSERT INTO playlists(Name) VALUES(?)''',(new_playlist,))
 
+    
     conn.commit()
     conn.close()
     del cursor
@@ -74,9 +80,9 @@ def add_song_to_playlist(conn):
 
     cursor = conn.cursor()
     print('Playlists:------------------------')
-    #get_playlist(conn)
+    get_playlist(conn)
     print('Songs:--------------------------')
-    #get_tracks(conn)
+    get_tracks(conn)
 
     playlist = int(input('Enter the number of the playlist: '))
     track = int(input('Enter the number of the song you wish to add to the playlist: '))
@@ -88,8 +94,59 @@ def add_song_to_playlist(conn):
     del conn
     del cursor
     
+def add_employee(conn):
+    
+
+    cursor = conn.cursor()
+    employees = list(cursor.execute("SELECT EmployeeId,FirstName FROM employees LIMIT 50"))
+    for i in employees:
+        print(i[0], '- ', i[1])
+    print('')
+    reports = int(input('New employee reportsTo: '))
+    lastName = input('last name: ')
+    firstName = input('first name: ')
+    title = input('title: ')
+     #foreign key
+    birthDate = input('birth_date: ')
+    hireDate = input('hire_date: ')
+    address = input('address: ')
+    city = input('city: ')
+    state = input('state: ')
+    country = input('country: ')
+    postalCode = input('postal_code: ')
+    phone = input('phone: ')
+    fax = input('fax: ')
+    email = input('email: ')
+
+    cursor.execute(f'''INSERT INTO employees(LastName,FirstName,Title,
+    ReportsTo,BirthDate,HireDate,Address,City,State,Country,
+    PostalCode,Phone,Fax,Email) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)''',(lastName,firstName,title,reports,birthDate,hireDate,
+    address,city,state,country,postalCode,phone,fax,email))
+
+    conn.commit()
+    conn.close()
+    del cursor
+    del conn
 
 
+def delete_employee(conn):
+    cursor = conn.cursor()
+    employees = list(cursor.execute("SELECT EmployeeId,FirstName FROM employees LIMIT 50"))
+    for i in employees:
+        print(i[0], '- ', i[1])
+    print('')
+
+    emp_id = int(input('enter the number of employee you wish to delete: '))
+    cursor.execute(f"DELETE from employees where EmployeeId ={emp_id}")
+
+    
+    conn.commit()
+    conn.close()
+    del cursor
+    del conn
+
+def report_purchase(conn):
+    pass
 
 def add_track(conn):
     
@@ -148,7 +205,7 @@ def add_track(conn):
 
 
 conn = create_connection('chinook.db')
-add_song_to_playlist(conn)
+delete_employee(conn)
 #get_playlist(conn)
 #add_track(conn)
 #retrieve_info(conn)
